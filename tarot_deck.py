@@ -1,3 +1,7 @@
+import json
+
+from copy import deepcopy
+
 cards = {'magician', 'high priestess', 'empress', 'emperor', 'hierophant', 'lovers', 'chariot', 'justice', 'hermit',
          'wheel of fortune', 'strength', 'hanged man', 'death', 'temperance', 'devil', 'tower', 'star', 'moon', 'sun',
          'judgement', 'world', 'fool', 'king of wands', 'queen of wands', 'knight of wands', 'page of wands',
@@ -187,3 +191,14 @@ class TarotDeck:
     def reset(self):
         self.deck = deepcopy(cards)
         return 'tarot deck reset'
+
+    def save(self, save_path):
+        with open(save_path, 'w') as file:
+            json.dump(list(self.deck), file)
+        print('saved deck')
+
+    def load(self, load_path):
+        with open(load_path, 'r') as file:
+            deck = json.load(file)
+            self.deck = set(deck)
+        print('loaded deck')

@@ -1,11 +1,25 @@
 import sys
 
+from os.path import exists
+
 from discord import Client, File, DMChannel
 
 from tarot_deck import TarotDeck
 
+from cleanup import register_exit_fun
+
 client = Client()
 tarot_deck = TarotDeck()
+save_path = 'deck.json'
+if exists(save_path):
+    tarot_deck.load(save_path)
+
+
+def cleanup():
+    tarot_deck.save(save_path)
+
+
+register_exit_fun(cleanup)
 
 
 @client.event
