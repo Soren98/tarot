@@ -2,7 +2,9 @@ import json
 
 from copy import deepcopy
 
-cards = {'magician', 'high priestess', 'empress', 'emperor', 'hierophant', 'lovers', 'chariot', 'justice', 'hermit',
+from random import shuffle
+
+cards = ['magician', 'high priestess', 'empress', 'emperor', 'hierophant', 'lovers', 'chariot', 'justice', 'hermit',
          'wheel of fortune', 'strength', 'hanged man', 'death', 'temperance', 'devil', 'tower', 'star', 'moon', 'sun',
          'judgement', 'world', 'fool', 'king of wands', 'queen of wands', 'knight of wands', 'page of wands',
          'ten of wands', 'nine of wands', 'eight of wands', 'seven of wands', 'six of wands', 'five of wands',
@@ -13,7 +15,7 @@ cards = {'magician', 'high priestess', 'empress', 'emperor', 'hierophant', 'love
          'seven of swords', 'six of swords', 'five of swords', 'four of swords', 'three of swords', 'two of swords',
          'ace of swords', 'king of coins', 'queen of coins', 'knight of coins', 'page of coins', 'ten of coins',
          'nine of coins', 'eight of coins', 'seven of coins', 'six of coins', 'five of coins', 'four of coins',
-         'three of coins', 'two of coins', 'ace of coins'}
+         'three of coins', 'two of coins', 'ace of coins']
 upright = {'magician': 'creativity, self-confidence, dexterity, sleight of hand,will-power, skill',
            'high priestess': 'knowledge, wisdom, learning, intuition, impatience, virtue, purity',
            'empress': 'development, accomplishment action, evolution',
@@ -174,7 +176,8 @@ reverse = {'magician': 'delay, unimaginative, insecurity, lack of self-confidenc
 
 class TarotDeck:
     def __init__(self):
-        self.deck = deepcopy(cards)
+        self.deck = None
+        self.reset()
 
     def draw(self):
         if len(self.deck) == 0:
@@ -190,15 +193,15 @@ class TarotDeck:
 
     def reset(self):
         self.deck = deepcopy(cards)
+        shuffle(self.deck)
         return 'tarot deck reset'
 
     def save(self, save_path):
         with open(save_path, 'w') as file:
-            json.dump(list(self.deck), file)
+            json.dump(self.deck, file)
         print('saved deck')
 
     def load(self, load_path):
         with open(load_path, 'r') as file:
-            deck = json.load(file)
-            self.deck = set(deck)
+            self.deck = json.load(file)
         print('loaded deck')

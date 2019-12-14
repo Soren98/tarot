@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='tarot',
-    version='1.1',
+    version='1.1.1',
     packages=['tarot'],
     url='https://github.com/Soren98/dip',
     license='Unlicense',
